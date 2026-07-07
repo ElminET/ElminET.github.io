@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Anime Quiz</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #1e3a8a;
+            color: white;
+        }
+
+        .container {
+            width: 700px;
+            margin: 40px auto;
+            background-color: white;
+            color: black;
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #1e3a8a;
+        }
+
+        img {
+            width: 100%;
+            height: 260px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 3px solid #1e3a8a;
+            margin-bottom: 20px;
+        }
+
+        .question {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .answers {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .answers button {
+            padding: 12px;
+            font-size: 17px;
+            border: 2px solid #1e3a8a;
+            background-color: #dbeafe;
+            cursor: pointer;
+            border-radius: 8px;
+        }
+
+        .answers button:hover {
+            background-color: #93c5fd;
+        }
+
+        .next-btn {
+            margin-top: 20px;
+            padding: 12px 25px;
+            background-color: #1e3a8a;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 17px;
+            cursor: pointer;
+            display: none;
+        }
+
+        .result {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1e3a8a;
+            margin-top: 20px;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #1e3a8a;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .correct {
+            background-color: lightgreen !important;
+        }
+
+        .wrong {
+            background-color: lightcoral !important;
+        }
+
+        @media (max-width: 750px) {
+            .container {
+                width: 90%;
+            }
+
+            img {
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Anime Quiz</h1>
+
+    <div id="quizBox">
+        <p id="counter"></p>
+        <img id="quizImage" src="" alt="Anime afbeelding">
+        <div id="question" class="question"></div>
+        <div id="answers" class="answers"></div>
+        <button id="nextBtn" class="next-btn">Volgende vraag</button>
+    </div>
+
+    <div id="resultBox" style="display: none;">
+        <h2>Quiz klaar!</h2>
+        <p id="resultText" class="result"></p>
+        <a href="index.html" class="back-link">Terug naar CV</a>
+    </div>
+</div>
+
+<script>
+    const questions = [
+        {
+            image: "https://placehold.co/700x300/ffcc00/000000?text=NARUTO",
+            question: "Wie is de hoofdpersoon van Naruto?",
+            answers: ["Sasuke", "Naruto", "Goku", "Luffy"],
+            correct: "Naruto"
+        },
+        {
+            image: "https://placehold.co/700x300/ff5733/ffffff?text=ONE+PIECE",
+            question: "Welke anime gaat over piraten?",
+            answers: ["One Piece", "Bleach", "Death Note", "Pokémon"],
+            correct: "One Piece"
+        },
+        {
+            image: "https://placehold.co/700x300/111111/ffffff?text=DEATH+NOTE",
+            question: "Wie gebruikt de Death Note?",
+            answers: ["Light Yagami", "Gojo", "Eren", "Vegeta"],
+            correct: "Light Yagami"
+        },
+        {
+            image: "https://placehold.co/700x300/f97316/ffffff?text=DRAGON+BALL",
+            question: "Wie is de hoofdpersoon van Dragon Ball?",
+            answers: ["Goku", "Naruto", "Ichigo", "Levi"],
+            correct: "Goku"
+        },
+        {
+            image: "https://placehold.co/700x300/7c3aed/ffffff?text=JUJUTSU+KAISEN",
+            question: "Wie is de bekende sensei in Jujutsu Kaisen?",
+            answers: ["Gojo", "Luffy", "Sasuke", "Tanjiro"],
+            correct: "Gojo"
+        },
+        {
+            image: "https://placehold.co/700x300/dc2626/ffffff?text=DEMON+SLAYER",
+            question: "Welke anime heeft ademhalingstechnieken?",
+            answers: ["Demon Slayer", "Death Note", "Pokémon", "One Piece"],
+            correct: "Demon Slayer"
+        },
+        {
+            image: "https://placehold.co/700x300/334155/ffffff?text=ATTACK+ON+TITAN",
+            question: "Welke anime gaat over Titans?",
+            answers: ["Attack on Titan", "Naruto", "Bleach", "Dragon Ball"],
+            correct: "Attack on Titan"
+        },
+        {
+            image: "https://placehold.co/700x300/2563eb/ffffff?text=BLEACH",
+            question: "Wie is de hoofdpersoon van Bleach?",
+            answers: ["Ichigo", "Luffy", "Goku", "Light"],
+            correct: "Ichigo"
+        },
+        {
+            image: "https://placehold.co/700x300/facc15/000000?text=POKEMON",
+            question: "Wie is de bekendste Pokémon?",
+            answers: ["Pikachu", "Naruto", "Eren", "Zoro"],
+            correct: "Pikachu"
+        },
+        {
+            image: "https://placehold.co/700x300/16a34a/ffffff?text=ZORO",
+            question: "Uit welke anime komt Zoro?",
+            answers: ["One Piece", "Naruto", "Bleach", "Tokyo Ghoul"],
+            correct: "One Piece"
+        },
+        {
+            image: "https://placehold.co/700x300/be123c/ffffff?text=TOKYO+GHOUL",
+            question: "Welke anime gaat over ghouls?",
+            answers: ["Tokyo Ghoul", "Pokémon", "Dragon Ball", "Demon Slayer"],
+            correct: "Tokyo Ghoul"
+        },
+        {
+            image: "https://placehold.co/700x300/000000/ffffff?text=ANIME+QUIZ",
+            question: "Hoeveel vragen heeft deze quiz?",
+            answers: ["5", "8", "10", "12"],
+            correct: "12"
+        }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+    let answered = false;
+
+    const counter = document.getElementById("counter");
+    const quizImage = document.getElementById("quizImage");
+    const question = document.getElementById("question");
+    const answers = document.getElementById("answers");
+    const nextBtn = document.getElementById("nextBtn");
+    const quizBox = document.getElementById("quizBox");
+    const resultBox = document.getElementById("resultBox");
+    const resultText = document.getElementById("resultText");
+
+    function showQuestion() {
+        answered = false;
+        nextBtn.style.display = "none";
+        answers.innerHTML = "";
+
+        let q = questions[currentQuestion];
+
+        counter.textContent = "Vraag " + (currentQuestion + 1) + " van " + questions.length;
+        quizImage.src = q.image;
+        question.textContent = q.question;
+
+        q.answers.forEach(function(answer) {
+            let button = document.createElement("button");
+            button.textContent = answer;
+
+            button.onclick = function() {
+                if (answered === false) {
+                    answered = true;
+
+                    if (answer === q.correct) {
+                        button.classList.add("correct");
+                        score++;
+                    } else {
+                        button.classList.add("wrong");
+                    }
+
+                    let allButtons = answers.querySelectorAll("button");
+                    allButtons.forEach(function(btn) {
+                        if (btn.textContent === q.correct) {
+                            btn.classList.add("correct");
+                        }
+                        btn.disabled = true;
+                    });
+
+                    nextBtn.style.display = "inline-block";
+                }
+            };
+
+            answers.appendChild(button);
+        });
+    }
+
+    nextBtn.onclick = function() {
+        currentQuestion++;
+
+        if (currentQuestion < questions.length) {
+            showQuestion();
+        } else {
+            quizBox.style.display = "none";
+            resultBox.style.display = "block";
+
+            let wrong = questions.length - score;
+            resultText.textContent = "Je hebt " + score + " van de " + questions.length + " vragen goed en " + wrong + " fout.";
+        }
+    };
+
+    showQuestion();
+</script>
+
+</body>
+</html>
