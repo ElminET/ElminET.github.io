@@ -14,6 +14,7 @@ body {
     padding-top: 56px;
     color: var(--text);
     background-color: #ffffff;
+    transition: 0.3s ease;
 }
 
 .navbar {
@@ -47,6 +48,7 @@ body {
 
 .section {
     padding: 80px 0;
+    transition: 0.3s ease;
 }
 
 .section-title {
@@ -74,6 +76,7 @@ body {
     border-radius: 18px;
     padding: 28px;
     box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+    transition: 0.3s ease;
 }
 
 .project-card {
@@ -104,16 +107,6 @@ body {
 .btn-primary:hover {
     background-color: var(--blue-dark);
     border-color: var(--blue-dark);
-}
-
-.btn-outline-primary {
-    color: var(--blue);
-    border-color: var(--blue);
-}
-
-.btn-outline-primary:hover {
-    background-color: var(--blue);
-    border-color: var(--blue);
 }
 
 .skill-item {
@@ -147,6 +140,29 @@ body {
     font-size: 14px;
 }
 
+.aldi-img {
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+    object-position: center;
+}
+
+.dark-toggle {
+    background: transparent;
+    border: none;
+    color: #dbeafe;
+    font-size: 25px;
+    cursor: pointer;
+    padding: 6px;
+    line-height: 1;
+    transition: 0.3s ease;
+}
+
+.dark-toggle:hover {
+    color: #60a5fa;
+    transform: scale(1.2) rotate(-10deg);
+}
+
 footer {
     background-color: var(--dark);
     color: white;
@@ -157,6 +173,86 @@ footer {
 .clicked {
     color: #bfdbfe;
     transform: scale(1.06);
+}
+
+body.dark-mode {
+    background-color: #020617 !important;
+    color: #e5e7eb !important;
+}
+
+body.dark-mode main,
+body.dark-mode section,
+body.dark-mode .section,
+body.dark-mode .bg-light,
+body.dark-mode .container {
+    background-color: #020617 !important;
+    color: #e5e7eb !important;
+}
+
+body.dark-mode .section-title {
+    color: #ffffff !important;
+}
+
+body.dark-mode p,
+body.dark-mode h2,
+body.dark-mode h4,
+body.dark-mode h5,
+body.dark-mode span {
+    color: #e5e7eb;
+}
+
+body.dark-mode .text-muted {
+    color: #cbd5e1 !important;
+}
+
+body.dark-mode .info-box,
+body.dark-mode .skill-box,
+body.dark-mode .education-box,
+body.dark-mode .contact-box,
+body.dark-mode .project-card {
+    background-color: #0f172a !important;
+    color: #e5e7eb !important;
+    border-color: #334155 !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.45) !important;
+}
+
+body.dark-mode .project-card .card-title {
+    color: #ffffff !important;
+}
+
+body.dark-mode .project-card .card-text {
+    color: #cbd5e1 !important;
+}
+
+body.dark-mode .progress {
+    background-color: #1e293b !important;
+}
+
+body.dark-mode .language-bar {
+    background-color: #334155 !important;
+}
+
+body.dark-mode .linkedin-card {
+    background-color: #111827 !important;
+    border-color: #334155 !important;
+    color: #e5e7eb !important;
+}
+
+body.dark-mode .btn-dark {
+    background-color: #2563eb !important;
+    border-color: #2563eb !important;
+}
+
+body.dark-mode footer {
+    background-color: #020617 !important;
+}
+
+body.dark-mode .dark-toggle {
+    color: #facc15;
+}
+
+body.dark-mode .dark-toggle:hover {
+    color: #fde68a;
 }
 
 @media (max-width: 768px) {
@@ -176,5 +272,9 @@ footer {
 
     .btn-lg.ms-2 {
         margin-left: 0 !important;
+    }
+
+    .dark-toggle {
+        margin-top: 8px;
     }
 }
